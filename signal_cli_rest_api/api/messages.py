@@ -70,17 +70,19 @@ async def send_message(
     metrics = ""
     if message.evalMatches is not None:
         for match in message.evalMatches:
-            metrics += "\n" + quote(match.metric) + ": " + quote(match.value) 
+            metrics += "\n" + match.metric + ": " + str(match.value) 
 
-    message = quote(message.title) + "\n" + "State: " +  quote(message.ruleName) + "\n" + "Message: " + quote(message.message) + "\n" + "URL: " + quote(message.ruleUrl) + "\n\n" + "Metrics: " + metrics
+    message_string = message.title + "\n" + "State: " +  message.ruleName + "\n" + "Message: " + message.message + "\n" + "URL: " + message.ruleUrl + "\n\n" + "Metrics: " + metrics
 
-    cmd = ["-u", quote(number), "send", "-m", message]
+    cmd = ["-u", quote(number), "send", "-m", quote(message_string)]
 
+    receivers = []
     if group:
         cmd.append("-g")
         cmd.append(quote(receiver))
     else:
-        cmd += quote(receiver)
+        receivers.append(receiver)
+        cmd += list(map(quote, receivers))
 
     response = await run_signal_cli_command(cmd)
 
