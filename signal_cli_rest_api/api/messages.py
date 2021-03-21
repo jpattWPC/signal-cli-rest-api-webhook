@@ -9,7 +9,9 @@ from signal_cli_rest_api.config import settings
 from signal_cli_rest_api.schemas import (
     MessageIncoming,
     MessageOutgoing,
+    MessageOutgoingGrafana,
     MessageSent,
+    MessageSentGrafana,
     ReactionOut,
 )
 from signal_cli_rest_api.utils import run_signal_cli_command, save_attachment
@@ -54,6 +56,34 @@ async def send_message(
     response = await run_signal_cli_command(cmd)
 
     return MessageSent(**message.dict(), timestamp=response.split("\n")[0])
+
+@router.post("{number}/grafana/", response_model=MessageSentGrafana, status_code=201)
+async def send_message(
+    message: MessageOutgoingGrafana, number: str, background_tasks: BackgroundTasks,
+    receiver: str, group: bool = True,
+) -> Any:
+    """
+    send message
+    """
+
+    metrics = ""
+    if message.evalMatches is not None:
+        for match in message.evalMatches:
+            metrics += "\n" + quote(match.metric) + ": " + quote(match.value) 
+
+    message = quote(message.title) + "\n" + "State: " +  quote(message.ruleName) + "\n" + "Message: " + quote(message.message) + "\n" + "URL: " + quote(message.ruleUrl) + "\n\n" + "Metrics: " + metrics
+
+    cmd = ["-u", quote(number), "send", "-m", message]
+
+    if group:
+        cmd.append("-g")
+        cmd.append(quote(receiver))
+    else:
+        cmd += quote(receiver)
+
+    response = await run_signal_cli_command(cmd)
+
+    return MessageSentGrafana(**message.dict(), timestamp=response.split("\n")[0])
 
 
 @router.post("/{number}/reaction")

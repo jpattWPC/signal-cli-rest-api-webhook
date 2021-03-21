@@ -22,6 +22,31 @@ class MessageSent(MessageOutgoing):
     timestamp: datetime
 
 
+class MetricGrafana(BaseModel):
+    value: float
+    metric: str
+    tags: Optional[Any] = None
+
+
+class MessageOutgoingGrafana(BaseModel):
+    dashboardId: int
+    evalMatches: Optional[List[MetricGrafana]] = None
+    imageUrl: Optional[str] = None
+    message: str
+    orgId: int
+    panelId: int
+    ruleId: int
+    ruleName: str
+    ruleUrl: str
+    state: str
+    tags: Optional[Any] = None
+    title: str
+
+
+class MessageSentGrafana(MessageOutgoingGrafana):
+    timestamp: datetime  
+
+
 class AttachmentOut(BaseModel):
     contentType: str
     filename: Optional[str] = None
