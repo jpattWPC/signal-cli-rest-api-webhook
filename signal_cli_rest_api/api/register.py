@@ -41,7 +41,8 @@ async def register_number(registration: Registration, number: str) -> Any:
         cmd.append("--voice")
 
     if registration.captcha:
-        cmd.extend(["--captcha", quote(registration.captcha)] )
+
+        cmd.extend(["--captcha", quote(registration.captcha)])
 
     await run_signal_cli_command(cmd)
     return registration
@@ -49,8 +50,9 @@ async def register_number(registration: Registration, number: str) -> Any:
 
 @router.post("/{number}/verify", response_model=Verification)
 async def verify_registration(verification: Verification, number: str) -> Any:
-    """
-    verify a registration, using the installation pin is currently not supported by signal-cli
+    """Verify a registration.
+
+    Using the installation pin is currently not supported by signal-cli.
     """
 
     cmd = ["-u", quote(number), "verify", quote(verification.verification_code)]
