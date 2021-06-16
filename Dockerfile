@@ -1,4 +1,5 @@
-FROM python:3.8-slim
+#FROM python:3.8-sli
+FROM debian:unstable-slim
 
 # Create signal-cli user
 ENV HOME /srv/signal
@@ -11,6 +12,8 @@ RUN set -eux; \
     apt-get install --no-install-recommends -y \
         openjdk-11-jre-headless \
         wget \
+        python3\
+        python3-pip\
     ; \
     rm -rf /var/lib/apt/lists/*
 
