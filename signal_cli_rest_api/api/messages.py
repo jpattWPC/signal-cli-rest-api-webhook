@@ -118,7 +118,7 @@ async def send_message(
 
     response = await run_signal_cli_command(cmd)
 
-    return MessageSentGrafana(**message.dict(), timestamp=response.split("\n")[0])
+    return MessageSentVigil(**message.dict(), timestamp=response.split("\n")[0])
 
 
 @router.post("/{number}/reaction")
