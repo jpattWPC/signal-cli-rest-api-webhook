@@ -10,8 +10,10 @@ from signal_cli_rest_api.schemas import (
     MessageIncoming,
     MessageOutgoing,
     MessageOutgoingGrafana,
+    MessageOutgoingVigil,
     MessageSent,
     MessageSentGrafana,
+    MessageSentVigil,
     ReactionOut,
 )
 from signal_cli_rest_api.utils import run_signal_cli_command, save_attachment
@@ -73,6 +75,36 @@ async def send_message(
             metrics += "\n" + match.metric + ": " + str(match.value) 
 
     message_string = message.title + "\n" + "State: " +  message.ruleName + "\n" + "Message: " + message.message + "\n" + "URL: " + message.ruleUrl + "\n\n" + "Metrics: " + metrics
+
+    cmd = ["-u", quote(number), "send", "-m", quote(message_string)]
+
+    receivers = []
+    if group:
+        cmd.append("-g")
+        cmd.append(quote(receiver))
+    else:
+        receivers.append(receiver)
+        cmd += list(map(quote, receivers))
+
+    response = await run_signal_cli_command(cmd)
+
+    return MessageSentGrafana(**message.dict(), timestamp=response.split("\n")[0])
+
+
+@router.post("{number}/vigil/", response_model=MessageSentVigil, status_code=201)
+async def send_message(
+    message: MessageOutgoingVigil, number: str, background_tasks: BackgroundTasks,
+    receiver: str, group: bool = True,
+) -> Any:
+    """
+    send message
+    """
+
+    replicas = ""
+    for replica in message.replicas:
+        replicas += "\n " + replica
+
+    message_string = "[Vigil]\n\nType: " + message.type + "\n" + "State: " +  message.status + "\n" + "Time: " + message.time.strftime('%d/%m/%y %H:%M:%S') + "\n" + "Replicas: " + replicas
 
     cmd = ["-u", quote(number), "send", "-m", quote(message_string)]
 

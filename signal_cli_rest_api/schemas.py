@@ -44,7 +44,24 @@ class MessageOutgoingGrafana(BaseModel):
 
 
 class MessageSentGrafana(MessageOutgoingGrafana):
-    timestamp: datetime  
+    timestamp: datetime
+
+
+class VigilPage(BaseModel):
+    title: str
+    url: str
+
+
+class MessageOutgoingVigil(BaseModel):
+    type: str
+    status: str
+    time: datetime
+    replicas: List[str]
+    page: VigilPage
+
+
+class MessageSentVigil(MessageOutgoingVigil):
+    timestamp: datetime   
 
 
 class AttachmentOut(BaseModel):
