@@ -55,7 +55,7 @@ class VigilPage(BaseModel):
 class MessageOutgoingVigil(BaseModel):
     type: str
     status: str
-    time: datetime
+    time: str
     replicas: List[str]
     page: VigilPage
 

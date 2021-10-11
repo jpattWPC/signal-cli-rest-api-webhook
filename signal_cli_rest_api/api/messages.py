@@ -104,7 +104,7 @@ async def send_message(
     for replica in message.replicas:
         replicas += "\n " + replica
 
-    message_string = "[Vigil]\n\nType: " + message.type + "\n" + "State: " +  message.status + "\n" + "Time: " + message.time.strftime('%d/%m/%y %H:%M:%S') + "\n" + "Replicas: " + replicas
+    message_string = "[Vigil]\n\nType: " + message.type + "\n" + "State: " +  message.status + "\n" + "Time: " + message.time + "\n" + "Replicas: " + replicas
 
     cmd = ["-u", quote(number), "send", "-m", quote(message_string)]
 
