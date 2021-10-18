@@ -6,3 +6,7 @@ This is a fork of the original repository by [SebastianLuebke](https://github.co
 * String escaping to prevent shell injections
 * API endpoint for the Grafana Webhook notification channel
 
+## Running the Docker image
+
+`docker run -p 8000:8000 -v /path/to/your/signal/dir:/srv/signal/.local/share/signal-cli signal-cli-rest-api`
+
