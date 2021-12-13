@@ -9,13 +9,13 @@ RUN set -eux; \
     mkdir -p /usr/share/man/man1; \
     apt-get update; \
     apt-get install --no-install-recommends -y \
-        openjdk-11-jre-headless \
+        openjdk-17-jre-headless \
         wget \
     ; \
     rm -rf /var/lib/apt/lists/*
 
 # Download & Install signal-cli
-ENV SIGNAL_CLI_VERSION=0.9.2
+ENV SIGNAL_CLI_VERSION=0.10.0
 RUN cd /tmp/ \
     && wget https://github.com/AsamK/signal-cli/releases/download/v"${SIGNAL_CLI_VERSION}"/signal-cli-"${SIGNAL_CLI_VERSION}".tar.gz \
     && tar xf signal-cli-"${SIGNAL_CLI_VERSION}".tar.gz -C /opt \
