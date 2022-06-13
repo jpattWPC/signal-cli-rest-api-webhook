@@ -760,6 +760,7 @@ pyparsing = [
     {file = "pyparsing-3.0.6.tar.gz", hash = "sha256:d9bdec0013ef1eb5a84ab39a3b3868911598afa494f5faa038647101504e2b81"},
 ]
 pypng = [
+    {file = "pypng-0.0.20-py3-none-any.whl", hash = "sha256:1f9c9cc24030459abbb2813a62b2bbcdb43ad0867e2f2232a302655308b3d25f"},
     {file = "pypng-0.0.20.tar.gz", hash = "sha256:1032833440c91bafee38a42c38c02d00431b24c42927feb3e63b104d8550170b"},
 ]
 pyqrcode = [
