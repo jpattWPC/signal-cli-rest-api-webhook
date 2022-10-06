@@ -26,6 +26,7 @@ ENV SIGNAL_CLI_VERSION=0.11.2
 RUN cd /tmp/ \
     && wget https://github.com/AsamK/signal-cli/releases/download/v"${SIGNAL_CLI_VERSION}"/signal-cli-"${SIGNAL_CLI_VERSION}-Linux".tar.gz \
     && tar xf signal-cli-"${SIGNAL_CLI_VERSION}-Linux".tar.gz -C /opt \
+    && rm signal-cli-"${SIGNAL_CLI_VERSION}-Linux".tar.gz \
     && ln -sf /opt/signal-cli-"${SIGNAL_CLI_VERSION}"/bin/signal-cli /usr/bin/si\
 gnal-cli
 
