@@ -17,7 +17,7 @@ aiofiles = "^0.6.0"
 httpx = ">=0.16.1,<0.24.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^7.2.0"
 flake8 = "^3.8.3"
 pylint = "^2.5.3"
 autoflake = "^1.4"
