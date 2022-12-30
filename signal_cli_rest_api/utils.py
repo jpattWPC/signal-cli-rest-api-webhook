@@ -1,5 +1,6 @@
 import asyncio
 import base64
+import os
 from typing import Any, List
 
 import aiofiles
@@ -72,7 +73,7 @@ async def save_attachment(attachment: AttachmentIn):
 
 
 async def run_signal_cli_command(cmd: List[str], wait: bool = True) -> Any:
-    base_cmd = ["signal-cli", "--config", settings.signal_config_path]
+    base_cmd = [os.path.join(settings.signal_bin_path, "signal-cli"), "--config", settings.signal_config_path]
 
     full_cmd = " ".join(base_cmd + cmd)
 
